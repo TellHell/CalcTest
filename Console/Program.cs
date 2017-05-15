@@ -14,6 +14,13 @@ namespace Console
         {
             var test = new Calc();
 
+            string result = test.Execute(args[2], new object[]{ args[0], args[1]}).ToString();
+
+            Output.WriteLine($"{args[0]} {args[2]} {args[1]} = {result}");
+
+            Output.ReadKey();
+            
+            /*
             int x;
             int.TryParse(args[0], out x);
 
@@ -33,11 +40,7 @@ namespace Console
             {
                 result = test.Divide(x, y);
             }
-
-
-            Output.WriteLine($"{x} {operation} {y} = {result}");
-
-            Output.ReadKey();
+            */
         }
     }
 }
