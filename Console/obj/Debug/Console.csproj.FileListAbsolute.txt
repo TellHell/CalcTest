@@ -1,0 +1,8 @@
+C:\Near\Docs\CalcTest\CalcTest\Console\bin\Debug\Console.exe.config
+C:\Near\Docs\CalcTest\CalcTest\Console\bin\Debug\Console.exe
+C:\Near\Docs\CalcTest\CalcTest\Console\bin\Debug\Console.pdb
+C:\Near\Docs\CalcTest\CalcTest\Console\bin\Debug\CalcLibrary.dll
+C:\Near\Docs\CalcTest\CalcTest\Console\bin\Debug\CalcLibrary.pdb
+C:\Near\Docs\CalcTest\CalcTest\Console\obj\Debug\Console.csprojResolveAssemblyReference.cache
+C:\Near\Docs\CalcTest\CalcTest\Console\obj\Debug\Console.exe
+C:\Near\Docs\CalcTest\CalcTest\Console\obj\Debug\Console.pdb

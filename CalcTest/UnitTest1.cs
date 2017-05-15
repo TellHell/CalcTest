@@ -4,11 +4,27 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CalcTest
 {
     [TestClass]
-    public class UnitTest1
+    public class CalcTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestSum()
         {
+            //Arrange
+            var test = new CalcLibrary.Calc();
+
+            //Act
+            var result = test.Sum(1, 2);
+            var result2 = test.Sum(3, 5);
+            /*
+             * more
+             * */
+
+            //Assert
+            Assert.AreEqual(result, 3);
+            Assert.AreEqual(result2, 8);
+            /*
+             * more
+             * */
         }
     }
 }
