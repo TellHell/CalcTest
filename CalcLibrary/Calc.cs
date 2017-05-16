@@ -51,58 +51,36 @@ namespace CalcLibrary
 
         public IList<IOperation> Operations { get; private set; }
 
-        // очевидно надо добавить параметр 
-        public object ExecuteNew(string operation, object[] args)
+        
+        public object ExecuteNew(IOperation ioper , object[] args)
         {
-            //var assm = Assembly.GetAssembly(typeof(IOperation));
-            //var types = assm.GetTypes().ToList();
+            var operArgs = ioper as IOperationArgs;
 
-            IOperation test = null;
-            var operName = test as IOperationArgs;
-            if (operName == null)
+            double result = 0;
+
+            if (operArgs == null)
             {
-                var oper = Operations.FirstOrDefault(it => it.Name == operation);
+                int x;
+                int.TryParse(args[0].ToString(), out x);
 
-                if (oper == null)
-                {
-                    return "Error";
-                }
-                else
-                {
-                    double result = 0;
+                int y;
+                int.TryParse(args[1].ToString(), out y);
 
-                    int x;
-                    int.TryParse(args[0].ToString(), out x);
+                result = ioper.Calc(x, y);
 
-                    int y;
-                    int.TryParse(args[1].ToString(), out y);
-                    result = oper.Calc(x, y);
-                    return result;
-                }
-                
+                return result;
             }
-            else if(operName != null)
+            else if (operArgs != null)
             {
-                
-                IOperationArgs oper = Operations.FirstOrDefault(it => it.Name == operation);
+                result = operArgs.Calc(args.Select(it => int.Parse(it.ToString())));
 
-                if (oper == null)
-                {
-                    return "Error";
-                }
-                else
-                {
-                    double result = 0;
-                    result = oper.Calc(args.Select(it => int.Parse(it.ToString())));
-                    return result;
-                }
+                return result;
             }
-            return "Some Error";
-            
+            return "SomeError";
         }
 
 
-        [Obsolete]
+        [Obsolete("Некорректная работа")]
         public object Execute(string operation, object[] args)
         {
             var oper = Operations.FirstOrDefault(it => it.Name == operation);

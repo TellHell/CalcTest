@@ -59,7 +59,7 @@ namespace SuperCalc
             try
             {
 
-                result = Calc.Execute(oper, args.ToArray());
+                result = Calc.ExecuteNew(cbOper.SelectedValue as IOperation, args.ToArray());
                 //result = Calc.ExecuteNew(oper, args.ToArray());
 
 

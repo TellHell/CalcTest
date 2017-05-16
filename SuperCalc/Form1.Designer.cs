@@ -37,13 +37,18 @@
             this.panTwoArgs = new System.Windows.Forms.Panel();
             this.panMoreArgs = new System.Windows.Forms.Panel();
             this.tbMore = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panTwoArgs.SuspendLayout();
             this.panMoreArgs.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(552, 271);
+            this.button1.Location = new System.Drawing.Point(147, 166);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -53,14 +58,14 @@
             // 
             // TBX
             // 
-            this.TBX.Location = new System.Drawing.Point(3, 12);
+            this.TBX.Location = new System.Drawing.Point(3, 22);
             this.TBX.Name = "TBX";
             this.TBX.Size = new System.Drawing.Size(73, 20);
             this.TBX.TabIndex = 1;
             // 
             // TBY
             // 
-            this.TBY.Location = new System.Drawing.Point(89, 12);
+            this.TBY.Location = new System.Drawing.Point(89, 22);
             this.TBY.Name = "TBY";
             this.TBY.Size = new System.Drawing.Size(77, 20);
             this.TBY.TabIndex = 2;
@@ -68,11 +73,10 @@
             // LResult
             // 
             this.LResult.AutoSize = true;
-            this.LResult.Location = new System.Drawing.Point(12, 243);
+            this.LResult.Location = new System.Drawing.Point(80, 132);
             this.LResult.Name = "LResult";
-            this.LResult.Size = new System.Drawing.Size(25, 13);
+            this.LResult.Size = new System.Drawing.Size(0, 13);
             this.LResult.TabIndex = 4;
-            this.LResult.Text = "123";
             this.LResult.Click += new System.EventHandler(this.label1_Click);
             // 
             // cbOper
@@ -95,36 +99,86 @@
             // 
             // panTwoArgs
             // 
+            this.panTwoArgs.Controls.Add(this.label3);
+            this.panTwoArgs.Controls.Add(this.label2);
             this.panTwoArgs.Controls.Add(this.TBX);
             this.panTwoArgs.Controls.Add(this.TBY);
-            this.panTwoArgs.Location = new System.Drawing.Point(12, 61);
+            this.panTwoArgs.Location = new System.Drawing.Point(12, 35);
             this.panTwoArgs.Name = "panTwoArgs";
-            this.panTwoArgs.Size = new System.Drawing.Size(200, 100);
+            this.panTwoArgs.Size = new System.Drawing.Size(210, 86);
             this.panTwoArgs.TabIndex = 7;
             this.panTwoArgs.Visible = false;
             // 
             // panMoreArgs
             // 
+            this.panMoreArgs.Controls.Add(this.label6);
+            this.panMoreArgs.Controls.Add(this.label5);
             this.panMoreArgs.Controls.Add(this.tbMore);
-            this.panMoreArgs.Location = new System.Drawing.Point(287, 61);
+            this.panMoreArgs.Location = new System.Drawing.Point(12, 35);
             this.panMoreArgs.Name = "panMoreArgs";
-            this.panMoreArgs.Size = new System.Drawing.Size(200, 100);
+            this.panMoreArgs.Size = new System.Drawing.Size(210, 86);
             this.panMoreArgs.TabIndex = 8;
             this.panMoreArgs.Visible = false;
             // 
             // tbMore
             // 
-            this.tbMore.Location = new System.Drawing.Point(19, 12);
+            this.tbMore.Location = new System.Drawing.Point(3, 34);
             this.tbMore.Name = "tbMore";
-            this.tbMore.Size = new System.Drawing.Size(157, 66);
+            this.tbMore.Size = new System.Drawing.Size(204, 49);
             this.tbMore.TabIndex = 0;
             this.tbMore.Text = "";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Значение X";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(89, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Значение Y";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 132);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Результат:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(43, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(127, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Значения для операции";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(43, 18);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(119, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "вводить через пробел";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 306);
+            this.ClientSize = new System.Drawing.Size(234, 203);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.panMoreArgs);
             this.Controls.Add(this.panTwoArgs);
             this.Controls.Add(this.label1);
@@ -136,6 +190,7 @@
             this.panTwoArgs.ResumeLayout(false);
             this.panTwoArgs.PerformLayout();
             this.panMoreArgs.ResumeLayout(false);
+            this.panMoreArgs.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,6 +207,11 @@
         private System.Windows.Forms.Panel panTwoArgs;
         private System.Windows.Forms.Panel panMoreArgs;
         private System.Windows.Forms.RichTextBox tbMore;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
     }
 }
 
