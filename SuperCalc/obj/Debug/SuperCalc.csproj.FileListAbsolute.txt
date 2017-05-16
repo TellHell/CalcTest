@@ -1,0 +1,11 @@
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\bin\Debug\SuperCalc.exe.config
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\bin\Debug\SuperCalc.exe
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\bin\Debug\SuperCalc.pdb
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.csprojResolveAssemblyReference.cache
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.Form1.resources
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.Properties.Resources.resources
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.csproj.GenerateResource.Cache
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.exe
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\obj\Debug\SuperCalc.pdb
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\bin\Debug\CalcLibrary.dll
+C:\Near\Docs\CalcTest\CalcTest\SuperCalc\bin\Debug\CalcLibrary.pdb

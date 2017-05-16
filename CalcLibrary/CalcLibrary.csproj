@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calc.cs" />
+    <Compile Include="DefaultOperations\DivOneOperation.cs" />
     <Compile Include="DefaultOperations\DivOperation.cs" />
     <Compile Include="DefaultOperations\ExpOperation.cs" />
     <Compile Include="DefaultOperations\MultOperation.cs" />

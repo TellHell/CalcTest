@@ -1,0 +1,7 @@
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\bin\Debug\ExcelOperation.dll
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\bin\Debug\ExcelOperation.pdb
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\bin\Debug\CalcLibrary.dll
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\bin\Debug\CalcLibrary.pdb
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\obj\Debug\ExcelOperation.csprojResolveAssemblyReference.cache
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\obj\Debug\ExcelOperation.dll
+C:\Near\Docs\CalcTest\CalcTest\ExcelOperation\obj\Debug\ExcelOperation.pdb

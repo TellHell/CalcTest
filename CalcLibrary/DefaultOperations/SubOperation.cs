@@ -13,6 +13,8 @@ namespace CalcLibrary.DefaultOperations
             get { return "sub"; }
         }
 
+        
+
         public double Calc(int x, int y)
         {
             return x - y;
