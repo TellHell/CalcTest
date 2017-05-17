@@ -13,6 +13,26 @@ namespace SuperCalc
 {
     public partial class Form1 : Form
     {
+        private class OperationB
+        {
+            public OperationB (IOperation operation)
+            {
+                Operation = operation;
+
+                var type = operation.GetType();
+
+                //var names = type.FullName.Split('.');
+
+                Name = $"{ type.Name}. {operation.Name}";
+            }
+
+            public IOperation Operation { get; set; }
+
+            public string Name { get; set; }
+        }
+
+        
+
         private CalcLibrary.Calc Calc { get; set; } 
 
         public Form1()
@@ -22,7 +42,7 @@ namespace SuperCalc
 
             //cbOper.Items.AddRange(Calc.Operations.Select(o=> o.Name).ToArray());
 
-            cbOper.DataSource = Calc.Operations;
+            cbOper.DataSource = Calc.Operations.Select(o=>new OperationB(o)).ToList();
             cbOper.DisplayMember = "Name";
         }
 
@@ -36,13 +56,18 @@ namespace SuperCalc
 
             LResult.Text = "";
             
-            var oper = cbOper.Text;
+            //var oper = cbOper.Text;
 
             object result = null;
 
-            var moreArgs = cbOper.SelectedItem is IOperationArgs;
+            var operB = cbOper.SelectedItem as OperationB;
+
+            var oper = operB.Operation;
+
+            var moreArgs = oper is IOperationArgs;
 
             var args = new List<object>();
+
             if (moreArgs)
             {
                 //var values = tbMore.Text.Split(' ');
@@ -59,7 +84,7 @@ namespace SuperCalc
             try
             {
 
-                result = Calc.ExecuteNew(cbOper.SelectedValue as IOperation, args.ToArray());
+                result = Calc.Execute(oper, args.ToArray());
                 //result = Calc.ExecuteNew(oper, args.ToArray());
 
 
@@ -81,7 +106,9 @@ namespace SuperCalc
 
         private void cbOper_SelectedIndexChanged(object sender, EventArgs e)
         {
-             var moreArgs = cbOper.SelectedItem is IOperationArgs;
+            var operB = cbOper.SelectedItem as OperationB;
+
+            var moreArgs = operB.Operation is IOperationArgs;
 
            /* var oper = Calc.Operations
                 .Where(o=> o is )
@@ -91,6 +118,15 @@ namespace SuperCalc
 
             panTwoArgs.Visible = !moreArgs;
             panMoreArgs.Visible = moreArgs;
+        }
+
+        private void cbOper_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            var item = (cbOper.Items[e.Index] as OperationB);
+            Brush brush = item.Operation is IOperationArgs ? Brushes.Green : Brushes.Black;
+            e.Graphics.DrawString(item.Name, e.Font, brush, e.Bounds);
+            e.DrawFocusRectangle();
         }
     }
 }

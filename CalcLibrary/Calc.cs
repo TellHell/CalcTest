@@ -10,7 +10,14 @@ namespace CalcLibrary
 {
     public class Calc
     {
-        public Calc()
+        private string ExtendDllDirectory { get; set; }
+
+        public Calc() : this("")
+        {
+            
+        }
+
+        public Calc(string extendDllDirectory)
         {
             Operations = new List<IOperation>();
 
@@ -18,8 +25,11 @@ namespace CalcLibrary
             //var types = assm.GetTypes().ToList();
             var types = new List<Type>();
 
+            var path = string.IsNullOrWhiteSpace(extendDllDirectory) ? Directory.GetCurrentDirectory() : extendDllDirectory;
+
+            var dlls = Directory.GetFiles(path, "*.dll");
+
             //найти dll рядом с нашим exe
-            var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(),"*.dll");
             foreach (var dll in dlls)
             {
                 //загрузить ее как сборку
@@ -38,7 +48,7 @@ namespace CalcLibrary
 
                 var interfaces = type.GetInterfaces();
 
-                if (interfaces.Contains(ioper))
+                if (interfaces.Any(i=>i.FullName == ioper.FullName))
                 {
                     var oper = Activator.CreateInstance(type) as IOperation;
                     if (oper != null)
@@ -52,70 +62,42 @@ namespace CalcLibrary
         public IList<IOperation> Operations { get; private set; }
 
         
-        public object ExecuteNew(IOperation ioper , object[] args)
+        public object Execute(IOperation operation , object[] args)
         {
-            var operArgs = ioper as IOperationArgs;
+            if (operation == null)
+                return null;
 
             double result = 0;
 
-            if (operArgs == null)
+            var operArgs = operation as IOperationArgs;
+            if (operArgs != null)
             {
+                result = operArgs.Calc(
+                    args.Select(it => int.Parse(it.ToString()))
+                );
+            }
+            else
+            {
+                // разибраем аргрументы
                 int x;
                 int.TryParse(args[0].ToString(), out x);
 
                 int y;
                 int.TryParse(args[1].ToString(), out y);
 
-                result = ioper.Calc(x, y);
-
-                return result;
+                result = operation.Calc(x, y);
             }
-            else if (operArgs != null)
-            {
-                result = operArgs.Calc(args.Select(it => int.Parse(it.ToString())));
 
-                return result;
-            }
-            return "SomeError";
+            // возвращаем результат
+            return result;
         }
-
-
-        [Obsolete("Некорректная работа")]
+    
+        [Obsolete]
         public object Execute(string operation, object[] args)
         {
-            var oper = Operations.FirstOrDefault(it => it.Name == operation);
+        var oper = Operations.FirstOrDefault(it => it.Name == operation);
 
-            //var assm = Assembly.GetAssembly(typeof(IOperation));
-            //var type = oper.GetType();
-            
-
-            if (oper == null)
-            {
-                return "Error";
-            }
-
-            else
-            {
-                double result = 0;
-
-                var operArgs = oper as IOperationArgs;
-
-                if (operArgs != null)
-                {
-                    result = operArgs.Calc(args.Select(it=>int.Parse(it.ToString())));
-                }
-                else
-                {
-
-                    int x;
-                    int.TryParse(args[0].ToString(), out x);
-
-                    int y;
-                    int.TryParse(args[1].ToString(), out y);
-                    result = oper.Calc(x, y);
-                }
-                return result;
-            }
+        return Execute(oper, args);
         }
 
         [Obsolete("Не используйте")]

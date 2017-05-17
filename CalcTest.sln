@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperCalc", "SuperCalc\Supe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperation", "ExcelOperation\ExcelOperation.csproj", "{D845242E-EE5E-49C5-B759-65F6846B8615}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCalc", "WebCalc\WebCalc.csproj", "{9A375B20-B4D9-4DBC-BEFA-D05FD1E028A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D845242E-EE5E-49C5-B759-65F6846B8615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D845242E-EE5E-49C5-B759-65F6846B8615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D845242E-EE5E-49C5-B759-65F6846B8615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A375B20-B4D9-4DBC-BEFA-D05FD1E028A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A375B20-B4D9-4DBC-BEFA-D05FD1E028A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A375B20-B4D9-4DBC-BEFA-D05FD1E028A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A375B20-B4D9-4DBC-BEFA-D05FD1E028A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
