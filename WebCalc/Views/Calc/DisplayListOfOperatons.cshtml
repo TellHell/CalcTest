@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebCalc.Managers.OperationResult>
+
+@{
+    ViewBag.Title = "Список вычислений";
+}
+
+<h2>Список всех вычислений</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OperationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Arguments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Result)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExecutionTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExecutionDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OperationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Arguments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Result)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExecutionTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExecutionDate)
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Вернуться к калькулятору", "Index", "Calc")
+</div>
