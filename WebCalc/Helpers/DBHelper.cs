@@ -64,5 +64,26 @@ namespace WebCalc.Helpers
                 command.ExecuteNonQuery();
             }
         }
+
+        public static void UpdateTable(string table, IEnumerable<object> item)
+        {
+            var result = new List<object>();
+
+            var values = item.Select(i => i is string || i is DateTime
+                    ? $"'{i}'"
+                    : $"{i}"
+            );
+
+            var sqlquery = $"UPDATE {table} SET Result = {values.ElementAt(2)}, ExecutionTime = {values.ElementAt(3)}, ExecutionDate = {values.ElementAt(4)} WHERE OperationName = {values.ElementAt(0)} AND Arguments = {values.ElementAt(1)}";
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                var command = new SqlCommand(sqlquery, conn);
+
+                conn.Open();
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

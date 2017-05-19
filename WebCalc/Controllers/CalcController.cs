@@ -40,7 +40,7 @@ namespace WebCalc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(OperationViewModel model)
+        public ActionResult Index(OperationViewModel model, string action)
         {
             var operResults = OperationResultRepository.GetAll();
 
@@ -48,7 +48,7 @@ namespace WebCalc.Controllers
                 op => op.OperationName == model.Operation && op.Arguments == model.InputData.Trim()
             );
 
-            if (oldResult != null)
+            if (oldResult != null && action != "Все равно вычислить")
             {
                 model.Result = $"Это уже вычисляли {oldResult.ExecutionDate}(заняло {oldResult.ExecutionTime} ms.) и получили {oldResult.Result}";
             }
@@ -75,7 +75,14 @@ namespace WebCalc.Controllers
                     ExecutionDate = DateTime.Now
                 };
 
-                OperationResultRepository.Save(operResult);
+                if (action == "Вычислить")
+                { 
+                    OperationResultRepository.Save(operResult);
+                }
+                else if (action == "Все равно вычислить")
+                {
+                    OperationResultRepository.Update(operResult);
+                }
             }
 
             model.Operations = OperationList;

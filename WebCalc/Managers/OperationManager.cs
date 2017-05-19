@@ -59,7 +59,16 @@ namespace WebCalc.Managers
 
         public void Update(OperationResult entity)
         {
-            throw new NotImplementedException();
+            var fields = new List<object>()
+            {
+                entity.OperationName,
+                entity.Arguments,
+                entity.Result,
+                entity.ExecutionTime,
+                entity.ExecutionDate.ToString("MM-dd-yyyy HH:mm:ss")
+            };
+
+            DBHelper.UpdateTable("OperationResult", fields);
         }
     }
 }
