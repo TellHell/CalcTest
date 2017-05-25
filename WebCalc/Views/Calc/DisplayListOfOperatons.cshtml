@@ -1,10 +1,23 @@
-﻿@model IEnumerable<WebCalc.Managers.OperationResult>
+﻿@model IEnumerable<DBModel.Models.OperationResult>
 
 @{
     ViewBag.Title = "Список вычислений";
+
+    var topOperations = ViewBag.TopOperations as IDictionary<string, int>;
 }
 
 <h2>Список всех вычислений</h2>
+<p>
+    @Html.ActionLink("Все операции", "DisplayListOfOperatons", null, new { @class = "btn btn-primary" })
+
+    @foreach (var top in topOperations)
+    {
+        @:&nbsp;
+        @Html.ActionLink($"{top.Key} ({top.Value})", "DisplayListOfOperatons", new { oper = top.Key }, new { @class = "btn btn-warning" })
+    }
+
+    @Html.ActionLink("Мои вычисления", "DisplayListOfOperatons", "Calc", new { myCalculate = true }, new { @class = "btn btn-danger" })
+</p>
 
 <table class="table">
     <tr>
@@ -22,6 +35,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ExecutionDate)
+        </th>
+        <th>
+            Инициатор
         </th>
         <th></th>
     </tr>
@@ -43,11 +59,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.ExecutionDate)
         </td>
+        <td>
+            @if (item.Iniciator != null)
+            {
+                @Html.DisplayFor(modelItem => item.Iniciator)
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
     </tr>
 }
 
 </table>
 
 <div>
-    @Html.ActionLink("Вернуться к калькулятору", "Index", "Calc")
+    @Html.ActionLink("Вернуться к калькулятору", "Index", "Calc", new { @class = "btn btn-default" })
 </div>

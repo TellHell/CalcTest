@@ -1,16 +1,18 @@
 ﻿using CalcLibrary;
+using DBModel.Managers;
+using DBModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using WebCalc.Managers;
 using WebCalc.Models;
 
 namespace WebCalc.Controllers
 {
+    [Authorize]
     public class CalcController : Controller
     {
 
@@ -20,6 +22,8 @@ namespace WebCalc.Controllers
         private IEnumerable<SelectListItem> OperationList { get; set; }
 
         private IOperationResultRepository OperationResultRepository { get; set; }
+
+        private IUserRepository UserRepository { get; set; }
         #endregion
 
         public CalcController()
@@ -28,7 +32,14 @@ namespace WebCalc.Controllers
 
             OperationList = Calc.Operations.Select(o => new SelectListItem() { Text = $"{o.GetType().Name}.{o.Name}", Value = $"{o.GetType().Name}.{o.Name}" });
 
-            OperationResultRepository = new OperationManager();
+            OperationResultRepository = new NHOperResultRepository();
+
+            UserRepository = new NHUserRepository();
+        }
+
+        private User GetCurrentUser()
+        {
+            return UserRepository.GetAll().FirstOrDefault(u => u.Email == HttpContext.User.Identity.Name);
         }
 
         // GET: Calc
@@ -50,7 +61,7 @@ namespace WebCalc.Controllers
 
             if (oldResult != null && action != "Все равно вычислить")
             {
-                model.Result = $"Это уже вычисляли {oldResult.ExecutionDate}(заняло {oldResult.ExecutionTime} ms.) и получили {oldResult.Result}";
+                model.Result = $"Это уже вычислял {oldResult.Iniciator?.Name} {oldResult.ExecutionDate}(заняло {oldResult.ExecutionTime} ms.) и получили {oldResult.Result}";
             }
             else
             {
@@ -68,11 +79,13 @@ namespace WebCalc.Controllers
 
                 var operResult = new OperationResult()
                 {
+                    Id = oldResult.Id,
                     OperationName = model.Operation,
                     Result = result as double?,
                     Arguments = model.InputData.Trim(),
                     ExecutionTime = stopWatch.ElapsedMilliseconds * 10,
-                    ExecutionDate = DateTime.Now
+                    ExecutionDate = DateTime.Now,
+                    Iniciator = GetCurrentUser()
                 };
 
                 if (action == "Вычислить")
@@ -90,11 +103,45 @@ namespace WebCalc.Controllers
             return View(model);
         }
 
-        public ActionResult DisplayListOfOperatons()
+        public ActionResult DisplayListOfOperatons(string oper, bool myCalculate = false)
         {
-            var operResults = OperationResultRepository.GetAll();
+            ViewBag.TopOperations = OperationResultRepository.GetTop(2);
+            IEnumerable<OperationResult> operations = new List<OperationResult>();
 
-            return View(operResults);
+            if (myCalculate)
+            {
+                operations = GetCurrentUser().Operations;
+                //operations = OperationResultRepository.GetAll(true).Where(o => o.Iniciator.Name == GetCurrentUser().Name);
+                return View(operations);
+            }
+            else if (!string.IsNullOrWhiteSpace(oper))
+            {
+                operations = OperationResultRepository.GetAll(true).Where(o => o.OperationName == oper);
+            }
+            else
+            {
+                operations = OperationResultRepository.GetAll(true);
+            }
+            
+                /*//ViewBag.TopOperations = OperationResultRepository.GetTop(2);
+                if (oper != null)
+                {
+                    operations = OperationResultRepository.GetAll(true).Where(o => o.OperationName == oper);
+                    return View(operations);
+                }
+                else
+                {
+                    ViewBag.TopOperations = OperationResultRepository.GetTop(2);
+                    operations = OperationResultRepository.GetAll(true);
+                    return View(operations);
+                }
+            */
+            
+            /*operations = !string.IsNullOrWhiteSpace(oper)
+                ? OperationResultRepository.GetAll(true).Where(o => o.OperationName == oper)
+                : OperationResultRepository.GetAll(true);*/
+            
+            return View(operations);
         }
     }
 }

@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebCalc.Models;
+using DBModel.Managers;
+using System.Web.Security;
+using DBModel.Models;
+using DBModel.Helpers;
+using WebCalc.Managers;
 
 namespace WebCalc.Controllers
 {
@@ -17,9 +22,12 @@ namespace WebCalc.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserRepository UserRepository;
 
         public AccountController()
         {
+            var calcContext = new CalcContext();
+            UserRepository = new NHUserRepository();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -66,29 +74,29 @@ namespace WebCalc.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
+            //var userRepository = new UserRepository();
+            
             // Сбои при входе не приводят к блокированию учетной записи
             // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            
+            if (UserRepository.Validate(model.Email, model.Password))
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
-                    return View(model);
+
+                FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+
+                return RedirectToLocal(returnUrl);
             }
+
+            ModelState.AddModelError("", "Неудачная попытка входа.");
+            return View(model);
+            
         }
 
         //
@@ -151,22 +159,40 @@ namespace WebCalc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                //var userRepository = new UserRepository();
+
+                if (UserRepository.GetAllWithDeleted().Any(u => u.Email == model.Email))
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    ModelState.AddModelError("", "Этот email уже занят");
+                }
+                else
+                {
+                    var user = new User
+                    {
+                        Name = model.Email,
+                        Login = model.Email,
+                        Email = model.Email,
+                        Password = model.Password,
+                        BirthDate = DateTime.Now.AddDays(new Random().Next(10000, 30000) * -1),
+                    };
+
+                    UserRepository.Save(user);
+
+                    FormsAuthentication.SetAuthCookie(model.Email, true);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                
                     // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
                     // Отправка сообщения электронной почты с этой ссылкой
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
 
-                    return RedirectToAction("Index", "Home");
+                   
                 }
-                AddErrors(result);
-            }
+                
+            
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
@@ -385,13 +411,34 @@ namespace WebCalc.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CrazyLogOff()
+        {
+
+
+
+            FormsAuthentication.SignOut();
+
+            var currentUser = UserRepository.GetAll().FirstOrDefault(u => u.Email == HttpContext.User.Identity.Name);
+
+            if(currentUser != null)
+            {
+                UserRepository.Delet(currentUser);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
         //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 

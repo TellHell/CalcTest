@@ -100,3 +100,12 @@ C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\ru\Microsoft.Owin.Security.MicrosoftA
 C:\Near\Docs\CalcTest\CalcTest\WebCalc\obj\Debug\WebCalc.csprojResolveAssemblyReference.cache
 C:\Near\Docs\CalcTest\CalcTest\WebCalc\obj\Debug\WebCalc.dll
 C:\Near\Docs\CalcTest\CalcTest\WebCalc\obj\Debug\WebCalc.pdb
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\DBModel.dll
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\DBModel.pdb
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\App_Data\CalcStorage.mdf
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\App_Data\CalcStorage_log.ldf
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\hibernate.cfg.xml
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\NHibernate.dll
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\Iesi.Collections.dll
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\NHibernate.xml
+C:\Near\Docs\CalcTest\CalcTest\WebCalc\bin\Iesi.Collections.xml
